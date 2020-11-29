@@ -3,9 +3,9 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "bint.h"
-#include "text.h"
+
 /*
- * Little BINT DEMO
+ * Tiny BINT DEMO
  */
 int main(int argc, char** argv){
 
@@ -21,16 +21,21 @@ int main(int argc, char** argv){
     break;
   }
   /*
-   * The TEXT package uses BINT, so the only available DEMO is to just
-   * print a host order word.
+   * Trivial byte order dump
    */
   uint64_t he64 = 0x0102030405060708;
 
-  char* u_he64 = (char*)(&he64);
+  uint8_t* he64p = (uint8_t*)(&he64);
 
-  char* u_be64 = text_uint64_hex_write(u_he64);
+  printf("BINT HE<64> 0x%lX\n",he64);
+  {
+    off_t bc = 0;
+    size_t bz = 8;
+    for (; bc < bz; bc++){
 
-  printf("BINT BE<64> %s\n",u_be64);
+      printf("BINT HE<64> [%ld] 0x%0x\n", bc, he64p[bc]);
+    }
+  }
 
   return 0;
 }
